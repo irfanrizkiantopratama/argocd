@@ -25,5 +25,8 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
+    - name: tagging image docker hub
+      run: docker tag my-nginx-image redheaven/my-nginx-image
+
     - name: Push Docker image to Docker Hub
-      run: docker push redheaven/my-nginx-image:latest
+      run: docker push redheaven/my-nginx-image
