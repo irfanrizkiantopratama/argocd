@@ -4,7 +4,7 @@
 FROM nginx:latest
 
 # Copy Nginx configuration file to the container
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 # Copy the HTML file to the default Nginx web root directory
 COPY simple-app /usr/share/nginx/html
