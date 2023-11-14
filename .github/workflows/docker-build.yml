@@ -24,15 +24,18 @@ jobs:
         if [[ $GITHUB_REF == 'refs/tags/'* ]]; then
           TAG=${GITHUB_REF#refs/tags/}
           TAG=$(echo $TAG | sed 's/\//_/')-$(git rev-parse --short $GITHUB_SHA)
-          echo "TAG=$TAG" >> $GITHUB_ENV
         else
-          echo "TAG=latest" >> $GITHUB_ENV
+          TAG="latest"
+          # Tentukan tag versi manual atau gunakan informasi lain dari proyek
+          # Contoh menggunakan timestamp sebagai tag versi alternatif
+          TAG=$(date "+%Y%m%d%H%M%S")
         fi
+        echo "TAG=$TAG" >> $GITHUB_ENV
 
-    -  name: git tag
-       run: |
+    - name: Debug Git Tag
+      run: | 
         echo "Git Tag: $TAG"
-     
+
     - name: Bangun Docker image
       run: docker build -t redheaven/my-nginx-image:${{ env.TAG }} .
 
