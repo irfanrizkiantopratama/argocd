@@ -58,12 +58,13 @@ jobs:
       uses: azure/setup-kubectl@v1
       with:
         version: 'v1.21.2'
-
+      
     - name: Configure kubectl
       run: |
-        echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
+        echo "${{ secrets.KUBE_CONFIG }}" | base64 --decode > kubeconfig
         mkdir -p $HOME/.kube
         mv kubeconfig $HOME/.kube/config
+
 
     - name: Deploy to Kubernetes
       run: |
