@@ -54,9 +54,19 @@ jobs:
     needs: build
 
     steps:
-    - name: Deploy ke Kubernetes
-      uses: appleboy/kubectl-action@v0.2.0
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v1
       with:
-        config: ${{ secrets.KUBE_CONFIG }}
-        command: apply
-        args: -f ./kubernetes/deployment.yaml
+        version: 'v1.21.2'
+
+    - name: Configure kubectl
+      run: |
+        echo "${{ secrets.KUBE_CONFIG }}" > kubeconfig
+        mkdir -p $HOME/.kube
+        mv kubeconfig $HOME/.kube/config
+
+    - name: Deploy to Kubernetes
+      run: |
+        kubectl apply -f kubernetes/deployment.yaml
+
+
