@@ -21,7 +21,7 @@ jobs:
     - name: Dapatkan Tag Git
       id: git-tag
       run: |
-        TAG="latest"
+        TAG="demo"
         echo "TAG=$TAG" >> $GITHUB_ENV
 
     - name: Debug Git Tag
